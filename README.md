@@ -1,4 +1,4 @@
-# custom-input
+# vue-assessment
 
 ## Project setup
 ```

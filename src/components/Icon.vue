@@ -1,42 +1,48 @@
 <template>
-  <div @click="onClick" class="main-div">
-    <div class="icon">
-      <font-awesome-icon :icon="['fas', iconName]" />
-    </div>
+  <MainDiv
+    @click="this.$emit('setCurrentField', this.$props.value, this.$props.name)"
+    class="main-div"
+  >
+    <IconDiv>
+      <font-awesome-icon :icon="['fas', name]" />
+    </IconDiv>
     <p>{{ text }}</p>
-  </div>
+  </MainDiv>
 </template>
 
-<script>
-export default {
-  name: 'Icon',
-  props: {
-    iconName: String,
-    text: String,
-    value: String,
-  },
-  methods: {
-    onClick() {
-      this.$emit('onClick', this.value, this.iconName)
-    },
-  },
-}
-</script>
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import { styled } from '@egoist/vue-emotion'
+const IconDiv = styled('div')`
+  padding-right: 5px;
+`
 
-<style scoped>
-.main-div {
+const MainDiv = styled('div')`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-}
 
-.main-div:hover {
-  background-color: grey;
-  cursor: pointer;
+  &:hover {
+    background-color: grey;
+    cursor: pointer;
+  }
+`
+@Component({
+  components: {
+    IconDiv,
+    MainDiv,
+  },
+  props: {
+    name: String,
+    text: String,
+    value: String,
+    setCurrentField: String,
+  },
+})
+export default class Icon extends Vue {
+  onClick() {
+    this.$emit('setCurrentField', this.$props.value, this.$props.name)
+  }
 }
-
-.icon {
-  padding-right: 5px;
-}
-</style>
+</script>
